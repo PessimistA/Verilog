@@ -17,6 +17,20 @@ nor m2(notq,s,q);
 
 endmodule
 
+//enable kodu
+module srlatchesenable(s, r, enable, q, notq);
+  input s, r, enable;     
+  output q, notq;         
+  wire s2,r2;   
+
+  nand (s2, s, enable);  
+  nand (r2, r, enable);   
+  nand (q, s2, notq);  
+  nand (notq, r2, q);   
+
+endmodule
+
+
 //testBench
 module testBench;
   reg s, r;
