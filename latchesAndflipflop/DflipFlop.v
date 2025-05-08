@@ -142,3 +142,38 @@ module dflipflop_tb1;
         $stop;
     end
 endmodule
+
+//gecikmeli answer veren sanırım bu doğru
+module dflipflopnormal2(input d, input clk,  output reg q1);
+    initial q1 = 0;  // <-- BURAYI EKLEDİK
+    always @(posedge clk) begin
+        case ({d,clk})
+            2'b00: q1 <= d;        // Set
+            2'b01: q1 <= d;  
+            2'b10: q1 <= d; 
+            2'b11: q1 <= d;    // Illegal state
+        endcase
+    end
+endmodule
+module dflipflop_tb1;
+    reg d,clk;
+    wire q1;
+
+
+    dflipflopnormal2 uut ( .d(d), .clk(clk), .q1(q1));
+
+    // Clock üretimi
+    initial begin
+        clk = 0;
+        forever #10 clk = ~clk;    // 10 birim periyot
+    end
+
+    // s ve r?yi pattern ?eklinde ilerlet
+    initial begin
+        d = 0;#20; 
+        d = 0;#20; 
+        d = 1;#20; 
+        d = 1;#20; 
+        $stop;
+    end
+endmodule
