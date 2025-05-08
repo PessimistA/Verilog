@@ -94,3 +94,51 @@ module tb_D_FF;
   always #2.5 Clk = ~Clk;  // Clock toggle every 2.5 time units
 
 endmodule
+
+//basic one 
+module dflipflopnormal1(input d, output q, output q1);
+
+or (q1,d);
+
+endmodule
+//uzun olan
+module dflipflopnormal2(input d, input clk, output reg q, output q1);
+
+or (q1,d);
+
+    initial begin
+        q = 0;#10; 
+        q = 1;#10; 
+        q = 0;#10; 
+        q = 1;#10; 
+
+    end
+    always @(posedge clk) begin
+        case ({d})
+            1'b0: q <= d;        // Set
+            1'b1: q <= d;     // Illegal state
+        endcase
+    end
+endmodule
+module dflipflop_tb1;
+    reg d,clk;
+    wire q1;
+    wire q;
+
+    dflipflopnormal2 uut ( .d(d), .clk(clk), .q(q), .q1(q1));
+
+    // Clock üretimi
+    initial begin
+        clk = 0;
+        forever #10 clk = ~clk;    // 10 birim periyot
+    end
+
+    // s ve r’yi pattern şeklinde ilerlet
+    initial begin
+        d = 0;#10; 
+        d = 0;#10; 
+        d = 1;#10; 
+        d = 1;#10; 
+        $stop;
+    end
+endmodule
