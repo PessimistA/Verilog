@@ -52,3 +52,18 @@ module srflipflop_tb1;
         $stop;
     end
 endmodule
+
+
+
+
+//easy way
+module srflipflopnormal1(input s, input r, output q, output q1);
+    wire r1, w1, w2;
+
+    not n1(r1, r);
+    and m2(w1, r1, s);
+    and m1(w2, r1, q);
+    or m3(q1, w1, w2);
+
+
+endmodule
