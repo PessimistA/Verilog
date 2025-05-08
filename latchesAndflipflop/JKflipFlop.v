@@ -67,3 +67,15 @@ module jkflipflop_tb1;
         $stop;
     end
 endmodule
+
+
+//basit hali
+module jkflipflopnormal12(input j, input k, input clk, output reg q, output q1);
+    wire k1, w1, w2,q2;
+    not n2(q2,q);
+    not n1(k1, k);
+    and m2(w1, q2, j);
+    and m1(w2, k1, q);
+    or m3(q1, w1, w2);
+
+endmodule
