@@ -71,7 +71,7 @@ module tb_updown;
         reset = 1; U = 0; D = 0;
         #10 reset = 0;
 
-        // İleri say
+        // İleri say//7 ye kadar çıkması için zamanla oynamalısın
         #10 U = 1;
         #50 U = 0;
 
