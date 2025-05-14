@@ -65,3 +65,58 @@ module tb_t_countert;
         #100 $stop; // 100 zaman birimi sonra simülasyonu bitir
     end
 endmodule
+
+
+//0 2 4 6 
+
+module t_flip_flop (
+    input clk,
+    input reset,
+    input t,
+    output reg q
+);
+    always @(posedge clk or posedge reset) begin
+        if (reset)
+            q <= 1'b0;
+        else if (t)
+            q <= ~q;
+    end
+endmodule
+
+module t_counter_3bitt1 (
+    input clk,
+    input reset,
+    output [2:0] q
+);
+
+    // Flip-floplar
+    t_flip_flop ff0 (.clk(clk), .reset(reset), .t(1'b0), .q(q[0])); // T0 = 0
+    t_flip_flop ff1 (.clk(clk), .reset(reset), .t(1'b1), .q(q[1]));
+    t_flip_flop ff2 (.clk(clk), .reset(reset), .t(q[1]), .q(q[2]));
+
+
+endmodule
+
+module tb_t_countert;
+    reg clk;
+    reg reset;
+    wire [2:0] q;
+
+    t_counter_3bitt1 uut (
+        .clk(clk),
+        .reset(reset),
+        .q(q)
+    );
+
+    initial begin
+        clk = 0;
+        reset = 1;
+        #5 reset = 0;
+    end
+
+    always #2 clk = ~clk; // 10 birimlik periyot
+
+    initial begin
+        #100 $stop; // 100 zaman birimi sonra simülasyonu bitir
+    end
+endmodule
